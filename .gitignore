@@ -1,5 +1,6 @@
 # .gitignore
 .env
+test/
 
 # Compiled class file
 *.class
