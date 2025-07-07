@@ -20,32 +20,51 @@ export default function PotteryList({ refresh }) {
             });
     }, [refresh]);
 
-    const parseAndFormatDate = (orderDate) => {
-        if (!orderDate) return "No Date Provided";
-
-        // Convert DB format (2025-07-06 14:24:04.602) to ISO string
-        const isoString = orderDate.replace(" ", "T") + "Z"; // Treat as UTC
-        const date = new Date(isoString);
-
-        if (isNaN(date.getTime())) {
-            return "Invalid Date";
-        }
-
-        return date.toLocaleString("en-US", {
-            timeZone: "America/New_York",
-            hour12: true,
-        });
-    };
-
     return (
-        <ul>
+        <div
+            style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "16px",
+                justifyContent: "center",
+                padding: "16px",
+            }}
+        >
             {list.map((p) => (
-                <li key={p.id}>
-                    Order Number: {p.orderId}, Name: {p.name}, Measurement of Piece:{" "}
-                    {p.length}x{p.width}x{p.height}, Total Price: ${p.price.toFixed(2)},
-                    Email: {p.email}, Submitted on: {parseAndFormatDate(p.orderDate)} EST
-                </li>
+                <div
+                    key={p.id}
+                    style={{
+                        border: "1px solid #ddd",
+                        borderRadius: "8px",
+                        boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+                        padding: "16px",
+                        width: "280px",
+                        backgroundColor: "#fafafa",
+                    }}
+                >
+                    <h3 style={{ margin: "0 0 8px 0" }}>Order: {p.orderId}</h3>
+                    <p>
+                        <strong>Name:</strong> {p.name}
+                    </p>
+                    <p>
+                        <strong>Size:</strong> {p.length} x {p.width} x {p.height}
+                    </p>
+                    <p>
+                        <strong>Price:</strong> ${p.price.toFixed(2)}
+                    </p>
+                    <p>
+                        <strong>Email:</strong> {p.email}
+                    </p>
+                    <p>
+                        <strong>Submitted:</strong>{" "}
+                        {new Date(p.orderDate).toLocaleString("en-US", {
+                            timeZone: "America/New_York",
+                            hour12: true,
+                        })}{" "}
+                        EST
+                    </p>
+                </div>
             ))}
-        </ul>
+        </div>
     );
 }
