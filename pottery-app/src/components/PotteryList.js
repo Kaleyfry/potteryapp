@@ -57,7 +57,7 @@ export default function PotteryList({ refresh }) {
   return (
     <div
       style={{
-        padding: "20px",
+        padding: "20px 20px 0 0",
         display: "flex",
         flexWrap: "wrap",
         gap: "20px",
