@@ -46,11 +46,25 @@ export default function PotteryList({ refresh }) {
 
   const formatDate = (orderDate) => {
     if (!orderDate) return "N/A";
+
     const isoString = orderDate.replace(" ", "T");
-    const date = new Date(isoString + "Z");
+    let date = new Date(isoString);
+    if (isNaN(date.getTime())) return "Invalid Date";
+
+    // Add 3 hours manually (3 * 60 * 60 * 1000 ms)
+    // Using this workaround because users will always be in NYC Timezone to enter info and review info
+    date = new Date(date.getTime() + 3 * 60 * 60 * 1000); 
+
     return date.toLocaleString("en-US", {
       timeZone: "America/New_York",
       hour12: true,
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      timeZoneName: "short",
     });
   };
 
@@ -101,7 +115,7 @@ export default function PotteryList({ refresh }) {
             <strong>Email:</strong> {maskEmail(p.email)}
           </p>
           <p style={{ margin: "4px 0", fontSize: "12px", color: "#555" }}>
-            Submitted: {formatDate(p.orderDate)} EST
+            Submitted: {formatDate(p.orderDate)}
           </p>
         </div>
       ))}
