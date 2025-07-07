@@ -6,7 +6,7 @@ function App() {
   const [refresh, setRefresh] = useState(0);
 
   return (
-    <div>
+    <div style={{ paddingLeft: "20px" }}>
       <h1>Pottery Orders</h1>
       <PotteryForm onAdd={() => setRefresh(refresh + 1)} />
       <PotteryList refresh={refresh} />
